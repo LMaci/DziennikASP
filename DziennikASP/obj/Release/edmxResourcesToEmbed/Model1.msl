@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DziennikModelStoreContainer" CdmEntityContainer="DziennikEntities">
+    <EntitySetMapping Name="AUTH">
+      <EntityTypeMapping TypeName="DziennikModel.AUTH">
+        <MappingFragment StoreEntitySet="AUTH">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="LOGIN" ColumnName="LOGIN" />
+          <ScalarProperty Name="HASLO" ColumnName="HASLO" />
+          <ScalarProperty Name="UPRAWNIENIA" ColumnName="UPRAWNIENIA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DANE_OSOBOWE">
+      <EntityTypeMapping TypeName="DziennikModel.DANE_OSOBOWE">
+        <MappingFragment StoreEntitySet="DANE_OSOBOWE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="IMIE" ColumnName="IMIE" />
+          <ScalarProperty Name="NAZWISKO" ColumnName="NAZWISKO" />
+          <ScalarProperty Name="PLEC" ColumnName="PLEC" />
+          <ScalarProperty Name="AUTH_ID" ColumnName="AUTH_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GRUPA">
+      <EntityTypeMapping TypeName="DziennikModel.GRUPA">
+        <MappingFragment StoreEntitySet="GRUPA">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAZWA" ColumnName="NAZWA" />
+          <ScalarProperty Name="KIERUNEK_ID" ColumnName="KIERUNEK_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KIERUNEK">
+      <EntityTypeMapping TypeName="DziennikModel.KIERUNEK">
+        <MappingFragment StoreEntitySet="KIERUNEK">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAZWA" ColumnName="NAZWA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PRACOWNIK">
+      <EntityTypeMapping TypeName="DziennikModel.PRACOWNIK">
+        <MappingFragment StoreEntitySet="PRACOWNIK">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DANE_OSOBOWE_ID" ColumnName="DANE_OSOBOWE_ID" />
+          <ScalarProperty Name="SL_STANOWISKO_ID" ColumnName="SL_STANOWISKO_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PROJEKT">
+      <EntityTypeMapping TypeName="DziennikModel.PROJEKT">
+        <MappingFragment StoreEntitySet="PROJEKT">
+          <ScalarProperty Name="POTWIERDZONY" ColumnName="POTWIERDZONY" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TEMAT" ColumnName="TEMAT" />
+          <ScalarProperty Name="STUDENT_ID" ColumnName="STUDENT_ID" />
+          <ScalarProperty Name="PRACOWNIK_ID" ColumnName="PRACOWNIK_ID" />
+          <ScalarProperty Name="PRZEDMIOT_ID" ColumnName="PRZEDMIOT_ID" />
+          <ScalarProperty Name="OCENA" ColumnName="OCENA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PRZEDMIOT">
+      <EntityTypeMapping TypeName="DziennikModel.PRZEDMIOT">
+        <MappingFragment StoreEntitySet="PRZEDMIOT">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAZWA" ColumnName="NAZWA" />
+          <ScalarProperty Name="ALIAS" ColumnName="ALIAS" />
+          <ScalarProperty Name="PRACOWNIK_ID" ColumnName="PRACOWNIK_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SL_STANOWISKO">
+      <EntityTypeMapping TypeName="DziennikModel.SL_STANOWISKO">
+        <MappingFragment StoreEntitySet="SL_STANOWISKO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAZWA" ColumnName="NAZWA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="STUDENT">
+      <EntityTypeMapping TypeName="DziennikModel.STUDENT">
+        <MappingFragment StoreEntitySet="STUDENT">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DANE_OSOBOWE_ID" ColumnName="DANE_OSOBOWE_ID" />
+          <ScalarProperty Name="GRUPA_ID" ColumnName="GRUPA_ID" />
+          <ScalarProperty Name="NUMER_ALBUMU" ColumnName="NUMER_ALBUMU" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="STUDENT_PRZEDMIOT">
+      <EntityTypeMapping TypeName="DziennikModel.STUDENT_PRZEDMIOT">
+        <MappingFragment StoreEntitySet="STUDENT_PRZEDMIOT">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="STUDENT_ID" ColumnName="STUDENT_ID" />
+          <ScalarProperty Name="PRZEDMIOT_ID" ColumnName="PRZEDMIOT_ID" />
+          <ScalarProperty Name="OCENA" ColumnName="OCENA" />
+          <ScalarProperty Name="OPIS" ColumnName="OPIS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,300 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DziennikModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AUTH">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LOGIN" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="HASLO" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="UPRAWNIENIA" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DANE_OSOBOWE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IMIE" Type="varchar" MaxLength="45" />
+    <Property Name="NAZWISKO" Type="varchar" MaxLength="50" />
+    <Property Name="PLEC" Type="char" MaxLength="1" />
+    <Property Name="AUTH_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="GRUPA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAZWA" Type="varchar" MaxLength="20" />
+    <Property Name="KIERUNEK_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="KIERUNEK">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAZWA" Type="varchar" MaxLength="40" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PRACOWNIK">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DANE_OSOBOWE_ID" Type="int" />
+    <Property Name="SL_STANOWISKO_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PROJEKT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TEMAT" Type="varchar" MaxLength="100" />
+    <Property Name="STUDENT_ID" Type="int" />
+    <Property Name="PRACOWNIK_ID" Type="int" />
+    <Property Name="PRZEDMIOT_ID" Type="int" />
+    <Property Name="OCENA" Type="int" />
+    <Property Name="POTWIERDZONY" Type="bit" />
+  </EntityType>
+  <EntityType Name="PRZEDMIOT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAZWA" Type="varchar" MaxLength="35" Nullable="false" />
+    <Property Name="ALIAS" Type="varchar" MaxLength="10" />
+    <Property Name="PRACOWNIK_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SL_STANOWISKO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAZWA" Type="varchar" MaxLength="55" />
+  </EntityType>
+  <EntityType Name="STUDENT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DANE_OSOBOWE_ID" Type="int" />
+    <Property Name="GRUPA_ID" Type="int" />
+    <Property Name="NUMER_ALBUMU" Type="varchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="STUDENT_PRZEDMIOT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="STUDENT_ID" Type="int" Nullable="false" />
+    <Property Name="PRZEDMIOT_ID" Type="int" Nullable="false" />
+    <Property Name="OCENA" Type="decimal" Precision="2" Scale="1" />
+    <Property Name="OPIS" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <Association Name="DANE_OSOBOWE_fk0">
+    <End Role="AUTH" Type="Self.AUTH" Multiplicity="0..1" />
+    <End Role="DANE_OSOBOWE" Type="Self.DANE_OSOBOWE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AUTH">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DANE_OSOBOWE">
+        <PropertyRef Name="AUTH_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GRUPA_fk0">
+    <End Role="KIERUNEK" Type="Self.KIERUNEK" Multiplicity="0..1" />
+    <End Role="GRUPA" Type="Self.GRUPA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KIERUNEK">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="GRUPA">
+        <PropertyRef Name="KIERUNEK_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PRACOWNIK_fk0">
+    <End Role="DANE_OSOBOWE" Type="Self.DANE_OSOBOWE" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="PRACOWNIK" Type="Self.PRACOWNIK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DANE_OSOBOWE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PRACOWNIK">
+        <PropertyRef Name="DANE_OSOBOWE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PRACOWNIK_fk1">
+    <End Role="SL_STANOWISKO" Type="Self.SL_STANOWISKO" Multiplicity="1" />
+    <End Role="PRACOWNIK" Type="Self.PRACOWNIK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SL_STANOWISKO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PRACOWNIK">
+        <PropertyRef Name="SL_STANOWISKO_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PROJEKT_fk0">
+    <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="0..1" />
+    <End Role="PROJEKT" Type="Self.PROJEKT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="STUDENT">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PROJEKT">
+        <PropertyRef Name="STUDENT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PROJEKT_fk1">
+    <End Role="PRACOWNIK" Type="Self.PRACOWNIK" Multiplicity="0..1" />
+    <End Role="PROJEKT" Type="Self.PROJEKT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PRACOWNIK">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PROJEKT">
+        <PropertyRef Name="PRACOWNIK_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PROJEKT_fk2">
+    <End Role="PRZEDMIOT" Type="Self.PRZEDMIOT" Multiplicity="0..1" />
+    <End Role="PROJEKT" Type="Self.PROJEKT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PRZEDMIOT">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PROJEKT">
+        <PropertyRef Name="PRZEDMIOT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PRZEDMIOT_fk0">
+    <End Role="PRACOWNIK" Type="Self.PRACOWNIK" Multiplicity="1" />
+    <End Role="PRZEDMIOT" Type="Self.PRZEDMIOT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PRACOWNIK">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PRZEDMIOT">
+        <PropertyRef Name="PRACOWNIK_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="STUDENT_fk0">
+    <End Role="DANE_OSOBOWE" Type="Self.DANE_OSOBOWE" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DANE_OSOBOWE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="STUDENT">
+        <PropertyRef Name="DANE_OSOBOWE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="STUDENT_fk1">
+    <End Role="GRUPA" Type="Self.GRUPA" Multiplicity="0..1" />
+    <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GRUPA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="STUDENT">
+        <PropertyRef Name="GRUPA_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="STUDENT_PRZEDMIOT_fk0">
+    <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="1" />
+    <End Role="STUDENT_PRZEDMIOT" Type="Self.STUDENT_PRZEDMIOT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="STUDENT">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="STUDENT_PRZEDMIOT">
+        <PropertyRef Name="STUDENT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="STUDENT_PRZEDMIOT_fk1">
+    <End Role="PRZEDMIOT" Type="Self.PRZEDMIOT" Multiplicity="1" />
+    <End Role="STUDENT_PRZEDMIOT" Type="Self.STUDENT_PRZEDMIOT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PRZEDMIOT">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="STUDENT_PRZEDMIOT">
+        <PropertyRef Name="PRZEDMIOT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DziennikModelStoreContainer">
+    <EntitySet Name="AUTH" EntityType="Self.AUTH" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DANE_OSOBOWE" EntityType="Self.DANE_OSOBOWE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GRUPA" EntityType="Self.GRUPA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KIERUNEK" EntityType="Self.KIERUNEK" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PRACOWNIK" EntityType="Self.PRACOWNIK" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PROJEKT" EntityType="Self.PROJEKT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PRZEDMIOT" EntityType="Self.PRZEDMIOT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SL_STANOWISKO" EntityType="Self.SL_STANOWISKO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="STUDENT" EntityType="Self.STUDENT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="STUDENT_PRZEDMIOT" EntityType="Self.STUDENT_PRZEDMIOT" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="DANE_OSOBOWE_fk0" Association="Self.DANE_OSOBOWE_fk0">
+      <End Role="AUTH" EntitySet="AUTH" />
+      <End Role="DANE_OSOBOWE" EntitySet="DANE_OSOBOWE" />
+    </AssociationSet>
+    <AssociationSet Name="GRUPA_fk0" Association="Self.GRUPA_fk0">
+      <End Role="KIERUNEK" EntitySet="KIERUNEK" />
+      <End Role="GRUPA" EntitySet="GRUPA" />
+    </AssociationSet>
+    <AssociationSet Name="PRACOWNIK_fk0" Association="Self.PRACOWNIK_fk0">
+      <End Role="DANE_OSOBOWE" EntitySet="DANE_OSOBOWE" />
+      <End Role="PRACOWNIK" EntitySet="PRACOWNIK" />
+    </AssociationSet>
+    <AssociationSet Name="PRACOWNIK_fk1" Association="Self.PRACOWNIK_fk1">
+      <End Role="SL_STANOWISKO" EntitySet="SL_STANOWISKO" />
+      <End Role="PRACOWNIK" EntitySet="PRACOWNIK" />
+    </AssociationSet>
+    <AssociationSet Name="PROJEKT_fk0" Association="Self.PROJEKT_fk0">
+      <End Role="STUDENT" EntitySet="STUDENT" />
+      <End Role="PROJEKT" EntitySet="PROJEKT" />
+    </AssociationSet>
+    <AssociationSet Name="PROJEKT_fk1" Association="Self.PROJEKT_fk1">
+      <End Role="PRACOWNIK" EntitySet="PRACOWNIK" />
+      <End Role="PROJEKT" EntitySet="PROJEKT" />
+    </AssociationSet>
+    <AssociationSet Name="PROJEKT_fk2" Association="Self.PROJEKT_fk2">
+      <End Role="PRZEDMIOT" EntitySet="PRZEDMIOT" />
+      <End Role="PROJEKT" EntitySet="PROJEKT" />
+    </AssociationSet>
+    <AssociationSet Name="PRZEDMIOT_fk0" Association="Self.PRZEDMIOT_fk0">
+      <End Role="PRACOWNIK" EntitySet="PRACOWNIK" />
+      <End Role="PRZEDMIOT" EntitySet="PRZEDMIOT" />
+    </AssociationSet>
+    <AssociationSet Name="STUDENT_fk0" Association="Self.STUDENT_fk0">
+      <End Role="DANE_OSOBOWE" EntitySet="DANE_OSOBOWE" />
+      <End Role="STUDENT" EntitySet="STUDENT" />
+    </AssociationSet>
+    <AssociationSet Name="STUDENT_fk1" Association="Self.STUDENT_fk1">
+      <End Role="GRUPA" EntitySet="GRUPA" />
+      <End Role="STUDENT" EntitySet="STUDENT" />
+    </AssociationSet>
+    <AssociationSet Name="STUDENT_PRZEDMIOT_fk0" Association="Self.STUDENT_PRZEDMIOT_fk0">
+      <End Role="STUDENT" EntitySet="STUDENT" />
+      <End Role="STUDENT_PRZEDMIOT" EntitySet="STUDENT_PRZEDMIOT" />
+    </AssociationSet>
+    <AssociationSet Name="STUDENT_PRZEDMIOT_fk1" Association="Self.STUDENT_PRZEDMIOT_fk1">
+      <End Role="PRZEDMIOT" EntitySet="PRZEDMIOT" />
+      <End Role="STUDENT_PRZEDMIOT" EntitySet="STUDENT_PRZEDMIOT" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
